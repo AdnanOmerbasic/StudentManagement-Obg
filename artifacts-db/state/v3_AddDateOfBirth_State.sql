@@ -1,0 +1,25 @@
+﻿CREATE TABLE Student (
+	Id INT IDENTITY(1,1) PRIMARY KEY,
+	FirstName NVARCHAR(50) NOT NULL,
+	MiddleName NVARCHAR(50) NULL,
+	LastName NVARCHAR(50) NOT NULL,
+	DateOfBirth DATE NULL,
+	Email NVARCHAR(100) NOT NULL UNIQUE,
+	EnrollmentDate DATE NOT NULL
+)
+
+CREATE TABLE Course (
+	Id INT IDENTITY(1,1) PRIMARY KEY,
+	Title NVARCHAR(100) NOT NULL,
+	Credits INT NOT NULL
+)
+
+CREATE TABLE Enrollment (
+	Id INT IDENTITY(1,1) PRIMARY KEY,
+	StudentId INT NOT NULL,
+	CourseId INT NOT NULL,
+	Grade INT NULL,
+	CONSTRAINT FK_Enrollment_Student FOREIGN KEY (StudentId) REFERENCES Student(Id),
+	CONSTRAINT FK_Enrollment_Course FOREIGN KEY (CourseId) REFERENCES Course(Id),
+	UNIQUE (StudentId, CourseId)
+)
