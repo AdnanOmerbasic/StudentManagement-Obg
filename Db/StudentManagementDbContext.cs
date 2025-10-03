@@ -30,6 +30,7 @@ namespace StudentManagement_Obg.Db
             modelBuilder.Entity<Course>(e =>
             {
                 e.Property(c => c.Title).HasColumnType("nvarchar(100)");
+                e.HasOne<Instructor>().WithMany().HasForeignKey(c => c.InstructorId);
             });
 
             modelBuilder.Entity<Enrollment>(e =>
@@ -40,13 +41,24 @@ namespace StudentManagement_Obg.Db
                 e.HasIndex(e => new { e.StudentId, e.CourseId }).IsUnique();
             });
 
+            modelBuilder.Entity<Instructor>(e =>
+            {
+                e.Property(i => i.FirstName).HasColumnType("nvarchar(50)");
+                e.Property(i => i.LastName).HasColumnType("nvarchar(50)");
+                e.Property(i => i.Email).HasColumnType("nvarchar(100)");
+
+                e.HasIndex(i => i.Email).IsUnique();
+            });
+
             modelBuilder.Entity<Student>().ToTable("Student");
             modelBuilder.Entity<Course>().ToTable("Course");
             modelBuilder.Entity<Enrollment>().ToTable("Enrollment");
+            modelBuilder.Entity<Instructor>().ToTable("Instructor");
         }
 
         public DbSet<Student> Students => Set<Student>();
         public DbSet<Course> Courses => Set<Course>();
         public DbSet<Enrollment> Enrollments => Set<Enrollment>();
+        public DbSet<Instructor> Instructors => Set<Instructor>();
     }
 }

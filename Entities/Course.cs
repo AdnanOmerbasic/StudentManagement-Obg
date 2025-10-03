@@ -11,6 +11,7 @@ namespace StudentManagement_Obg.Entities
         public int Id { get; set; }
         public string Title { get; set; }
         public int Credits { get; set; }
+        public int? InstructorId { get; set; }
         public Course()
         {
 
