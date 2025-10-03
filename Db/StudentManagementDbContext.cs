@@ -20,6 +20,7 @@ namespace StudentManagement_Obg.Db
             modelBuilder.Entity<Student>(e =>
             {
                 e.Property(s => s.FirstName).HasColumnType("nvarchar(50)");
+                e.Property(s => s.MiddleName).HasColumnType("nvarchar(50)");
                 e.Property(s => s.LastName).HasColumnType("nvarchar(50)");
                 e.Property(s => s.Email).HasColumnType("nvarchar(100)");
 
