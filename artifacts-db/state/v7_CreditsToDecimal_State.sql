@@ -1,0 +1,45 @@
+﻿CREATE TABLE Student (
+	Id INT IDENTITY(1,1) PRIMARY KEY,
+	FirstName NVARCHAR(50) NOT NULL,
+	MiddleName NVARCHAR(50) NULL,
+	LastName NVARCHAR(50) NOT NULL,
+	DateOfBirth DATE NULL,
+	Email NVARCHAR(100) NOT NULL UNIQUE,
+	EnrollmentDate DATE NOT NULL
+)
+
+
+CREATE TABLE Instructor (
+	Id INT IDENTITY(1,1) PRIMARY KEY,
+	FirstName NVARCHAR(50) NOT NULL,
+	LastName NVARCHAR(50) NOT NULL,
+	Email NVARCHAR(100) NOT NULL UNIQUE,
+	HireDate DATE NOT NULL
+)
+
+CREATE TABLE Course (
+	Id INT IDENTITY(1,1) PRIMARY KEY,
+	Title NVARCHAR(100) NOT NULL,
+	Credits DECIMAL(5,2) NOT NULL,
+	InstructorId INT NULL,
+	CONSTRAINT FK_Course_Instructor FOREIGN KEY (InstructorId) REFERENCES Instructor(Id)
+)
+
+CREATE TABLE Enrollment (
+	Id INT IDENTITY(1,1) PRIMARY KEY,
+	StudentId INT NOT NULL,
+	CourseId INT NOT NULL,
+	FinalGrade INT NULL,
+	CONSTRAINT FK_Enrollment_Student FOREIGN KEY (StudentId) REFERENCES Student(Id),
+	CONSTRAINT FK_Enrollment_Course FOREIGN KEY (CourseId) REFERENCES Course(Id),
+	UNIQUE (StudentId, CourseId)
+)
+
+CREATE TABLE Department (
+	Id INT IDENTITY(1,1) PRIMARY KEY,
+	[Name] NVARCHAR(50) NOT NULL,
+	Budget INT NOT NULL,
+	StartDate DATE NOT NULL,
+	DepartmentHeadId INT NOT NULL UNIQUE,
+	CONSTRAINT FK_Department_DepartmentHead FOREIGN KEY (DepartmentHeadId) REFERENCES Instructor(Id)
+)
