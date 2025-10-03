@@ -30,6 +30,8 @@ namespace StudentManagement_Obg.Db
             modelBuilder.Entity<Course>(e =>
             {
                 e.Property(c => c.Title).HasColumnType("nvarchar(100)");
+                e.Property(c => c.Credits).HasPrecision(5, 2);
+
                 e.HasOne<Instructor>().WithMany().HasForeignKey(c => c.InstructorId);
             });
 
