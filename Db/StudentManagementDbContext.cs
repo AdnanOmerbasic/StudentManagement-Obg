@@ -50,15 +50,25 @@ namespace StudentManagement_Obg.Db
                 e.HasIndex(i => i.Email).IsUnique();
             });
 
+            modelBuilder.Entity<Department>(e =>
+            {
+                e.Property(d => d.Name).HasColumnType("nvarchar(50)");
+                e.HasOne<Instructor>().WithMany().HasForeignKey(d => d.DepartmentHeadId);
+
+                e.HasIndex(d => d.DepartmentHeadId).IsUnique();
+            });
+
             modelBuilder.Entity<Student>().ToTable("Student");
             modelBuilder.Entity<Course>().ToTable("Course");
             modelBuilder.Entity<Enrollment>().ToTable("Enrollment");
             modelBuilder.Entity<Instructor>().ToTable("Instructor");
+            modelBuilder.Entity<Department>().ToTable("Department");
         }
 
         public DbSet<Student> Students => Set<Student>();
         public DbSet<Course> Courses => Set<Course>();
         public DbSet<Enrollment> Enrollments => Set<Enrollment>();
         public DbSet<Instructor> Instructors => Set<Instructor>();
+        public DbSet<Department> Departments => Set<Department>();
     }
 }
